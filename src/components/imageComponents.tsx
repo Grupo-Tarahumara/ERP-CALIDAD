@@ -1,6 +1,8 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input' // Asegúrate de importar tus componentes personalizados
+import { Input } from '@/components/ui/input'
+import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogClose } from '@/components/ui/dialog'
+import { Description } from '@radix-ui/react-dialog'
 
 interface ModuleProps {
   label: string
@@ -25,100 +27,106 @@ const imageComponents: React.FC<ModuleProps> = ({
   handleInputChange,
   handleFileChange
 }) => {
+  let labelText = ''
+
+  switch (imageKey) {
+    case 'description':
+      labelText = 'Pon una descripción'
+      break
+    case 'tempOrigen':
+      labelText = 'Temperatura Origen'
+      break
+    case 'tempDestino':
+      labelText = 'Temperatura Destino'
+      break
+    default:
+      labelText = 'Pon una descripción'
+  }
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        marginBottom: '20px',
-        gap: '10px' // Espacio entre los botones "Sí" y "No", y la descripción
-      }}
-    >
+    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px', gap: '10px' }}>
       <label style={{ flex: '0 0 50px', fontWeight: 'bold' }}>{label}: </label>
+
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <Button
-          style={{ marginRight: '0' }}
-          name={optionName}
-          value='Si'
-          onClick={handleButtonClick}
-        >
+        <Button name={optionName} value='Si' onClick={handleButtonClick}>
           Sí
         </Button>
-        <Button
-          style={{ marginRight: '0' }}
-          name={optionName}
-          value='No'
-          onClick={handleButtonClick}
-        >
+        <Button name={optionName} value='No' onClick={handleButtonClick}>
           No
         </Button>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <label style={{ fontWeight: 'bold' }}>Pon una descripción</label>
+          <label style={{ fontWeight: 'bold' }}>{labelText}</label>
           <Input
             type='text'
             name={descriptionKey}
             value={formData[descriptionKey]}
             onChange={handleInputChange}
-            style={{
-              padding: '8px',
-              borderRadius: '4px',
-              border: '1px solid #ccc',
-              width: '200px' // Tamaño fijo para el input
-            }}
+            style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', width: '200px' }}
           />
         </div>
-        {formData[optionName] === option && (
-          <div>
-            <div style={{ marginTop: '20px' }}>
-              <Button>
-                <label
-                  htmlFor={`file-input-${imageKey}`}
-                  style={{ cursor: 'pointer' }}
-                >
-                  Seleccionar Imagen
-                </label>
-              </Button>
-              {(formData[imageKey] != null && formData[imageKey].length < 8)
-                ? (
-                  <input
-                    type='file'
-                    id={`file-input-${imageKey}`}
-                    accept='image/*'
-                    multiple
-                    style={{ display: 'none' }}
-                    onChange={(e) => handleFileChange(e, imageKey)}
-                  />
-                  )
-                : (
-                  <p style={{ color: 'red', marginTop: '10px' }}>
-                    No puedes agregar más de 8 imágenes
-                  </p>
-                  )}
-              <div
-                style={{
+
+        {formData[optionName] === option && imageKey !== 'tempDestino' && imageKey !== 'tempOrigen' && (
+          <div style={{ marginTop: '20px' }}>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button style={{ marginTop: '10px' }}>Seleccionar imágenes</Button>
+              </DialogTrigger>
+
+              <DialogContent>
+                <DialogTitle>Galería de Imágenes</DialogTitle>
+
+                {/* Contenedor scrollable para las imágenes */}
+                <div style={{
                   display: 'flex',
                   flexWrap: 'wrap',
-                  marginTop: '20px'
+                  gap: '10px',
+                  marginTop: '20px',
+                  maxHeight: '400px',
+                  overflowY: 'auto',
+                  border: '1px solid #ccc',
+                  padding: '10px',
+                  borderRadius: '8px'
                 }}
-              >
-                {formData[imageKey]?.map(
-                  (imageUrl: string, index: number) => (
+                >
+                  {formData[imageKey].map((imageUrl: string, index: number) => (
                     <img
                       key={index}
                       src={imageUrl}
-                      alt={imageKey}
-                      style={{
-                        width: '200px',
-                        height: '200px',
-                        margin: '10px',
-                        objectFit: 'cover'
-                      }}
+                      alt={`image-${index}`}
+                      style={{ width: '150px', height: '150px', objectFit: 'cover' }}
                     />
-                  )
-                )}
-              </div>
-            </div>
+                  ))}
+                </div>
+
+                {/* Sección para seleccionar más imágenes */}
+                <div style={{ marginTop: '20px' }}>
+                  <Button>
+                    <label htmlFor={`dialog-file-input-${imageKey}`} style={{ cursor: 'pointer' }}>
+                      Seleccionar más imágenes
+                    </label>
+                  </Button>
+
+                  {formData[imageKey].length < 8
+                    ? (
+                      <input
+                        type='file'
+                        id={`dialog-file-input-${imageKey}`}
+                        accept='image/*'
+                        multiple
+                        style={{ display: 'none' }}
+                        onChange={(e) => handleFileChange(e, imageKey)}
+                      />
+                      )
+                    : (
+                      <p style={{ color: 'red', marginTop: '10px' }}>No puedes agregar más de 8 imágenes</p>
+                      )}
+                </div>
+
+                <DialogClose asChild>
+                  <Button style={{ marginTop: '20px' }}>Cerrar</Button>
+                </DialogClose>
+              </DialogContent>
+            </Dialog>
           </div>
         )}
       </div>

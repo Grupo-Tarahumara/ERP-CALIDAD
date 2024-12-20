@@ -543,230 +543,129 @@ const ActaDeLlegada = (): JSX.Element => {
                 </div>
               ))}
 
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginBottom: '20px',
-                  gap: '20px' // Espacio entre las dos secciones
-                }}
-              >
-                {/* Sección para "Cumple termógrafo origen" y botones */}
-                <div style={{ display: 'flex', alignItems: 'center', flex: '1' }}>
-                  <label
-                    style={{
-                      flex: '0 0 250px',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    Cumple termógrafo origen:
-                  </label>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <Button
-                      style={{
-                        padding: '8px 16px',
-                        borderRadius: '4px'
-                      }}
-                      name='option'
-                      value='Si'
-                      onClick={handleButtonClick}
-                    >
-                      Sí
-                    </Button>
-                    <Button
-                      style={{
-                        padding: '8px 16px',
-                        borderRadius: '4px'
-                      }}
-                      name='option'
-                      value='No'
-                      onClick={handleButtonClick}
-                    >
-                      No
-                    </Button>
-                  </div>
-                </div>
 
-                {/* Sección para "Temperatura origen termógrafo" y su input */}
-                <div style={{ display: 'flex', alignItems: 'center', flex: '3' }}>
-                  <label
-                    style={{
-                      flex: '0 0 250px',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    Temperatura origen termógrafo:
-                  </label>
-                  <Input
-                    type='text'
-                    name='tempOrigen'
-                    value={formData.tempOrigen}
-                    onChange={handleInputChange}
-                    style={{
-                      flex: '1',
-                      padding: '8px',
-                      borderRadius: '4px',
-                      border: '1px solid #ccc'
-                    }}
-                  />
-                </div>
-              </div>
 
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginBottom: '20px',
-                  gap: '20px' // Espacio entre las dos secciones
-                }}
-              >
-                <label style={{ flex: '0 0 250px', fontWeight: 'bold' }}>
-                  cumple Territorio nacional:
-                </label>
+                <ImageComponents
+                  label='Temperatura origen'
+                  optionName='option'
+                  imageKey='tempOrigen'
+                  descriptionKey='tempOrigen'
+                  option='No'
+                  formData={formData}
+                  handleButtonClick={handleButtonClick}
+                  handleInputChange={handleInputChange}
+                  handleFileChange={handleFileChange3}
+                />
 
-                <div style={{ marginBottom: 20 }}>
-                  <Button
-                    style={{ flex: 5, marginRight: '10px' }}
-                    name='option2'
-                    value='Si'
-                    onClick={handleButtonClick}
-                  >
-                    {' '}
-                    Sí{' '}
-                  </Button>
-                  <Button name='option2' value='No' onClick={handleButtonClick}>
-                    {' '}
-                    No{' '}
-                  </Button>
 
-                </div>
+          
 
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    marginBottom: '10px'
-                  }}
-                >
-                  <label style={{ flex: '0 0 250px', fontWeight: 'bold' }}>Temperatura Territorio nacional  </label>
-                  <Input
-                    type='text'
-                    name='tempDestino'
-                    value={formData.tempDestino}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
+            
+                <ImageComponents
+                  label='Temperatura destino'
+                  optionName='option2'
+                  imageKey='tempDestino'
+                  descriptionKey='tempDestino'
+                  option='No'
+                  formData={formData}
+                  handleButtonClick={handleButtonClick}
+                  handleInputChange={handleInputChange}
+                  handleFileChange={handleFileChange3}
+                />
+
 
             </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-
-        <Accordion type='single' collapsible style={{ padding: '8px 0' }}>
-          <AccordionItem value='item-2'>
-            <AccordionTrigger
-              style={{
-                fontSize: '20px',
-                fontWeight: 'bold',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                border: '2px solid #7A2A1E',
-                textAlign: 'center',
-                cursor: 'pointer'
-              }}
-            >
-              Inspección de transporte
-            </AccordionTrigger>
             <AccordionContent>
 
-              <ImageComponents
-                label='Limpio'
-                optionName='optionLimpio'
-                imageKey='imageLimpio'
-                descriptionKey='limpio'
-                option='No'
-                formData={formData}
-                handleButtonClick={handleButtonClick}
-                handleInputChange={handleInputChange}
-                handleFileChange={handleFileChange3}
-              />
+<ImageComponents
+  label='Limpio'
+  optionName='optionLimpio'
+  imageKey='imageLimpio'
+  descriptionKey='limpio'
+  option='No'
+  formData={formData}
+  handleButtonClick={handleButtonClick}
+  handleInputChange={handleInputChange}
+  handleFileChange={handleFileChange3}
+/>
 
-              <ImageComponents
-                label='Caja cerrada, en buen estado'
-                optionName='optionCaja'
-                imageKey='imageCajaCerrada'
-                descriptionKey='cajaCerrada'
-                option='No'
-                formData={formData}
-                handleButtonClick={handleButtonClick}
-                handleInputChange={handleInputChange}
-                handleFileChange={handleFileChange3}
-              />
+<ImageComponents
+  label='Caja cerrada, en buen estado'
+  optionName='optionCaja'
+  imageKey='imageCajaCerrada'
+  descriptionKey='cajaCerrada'
+  option='No'
+  formData={formData}
+  handleButtonClick={handleButtonClick}
+  handleInputChange={handleInputChange}
+  handleFileChange={handleFileChange3}
+/>
 
-              <ImageComponents
-                label='Lona en buen estado'
-                optionName='optionLona'
-                imageKey='imageLonaBuenEstado'
-                descriptionKey='lona'
-                option='No'
-                formData={formData}
-                handleButtonClick={handleButtonClick}
-                handleInputChange={handleInputChange}
-                handleFileChange={handleFileChange3}
-              />
+<ImageComponents
+  label='Lona en buen estado'
+  optionName='optionLona'
+  imageKey='imageLonaBuenEstado'
+  descriptionKey='lona'
+  option='No'
+  formData={formData}
+  handleButtonClick={handleButtonClick}
+  handleInputChange={handleInputChange}
+  handleFileChange={handleFileChange3}
+/>
 
-              <ImageComponents
-                label='Libre de fauna nociva'
-                optionName='optionLibre'
-                imageKey='imageLibreFauna'
-                descriptionKey='fauna'
-                option='No'
-                formData={formData}
-                handleButtonClick={handleButtonClick}
-                handleInputChange={handleInputChange}
-                handleFileChange={handleFileChange3}
-              />
+<ImageComponents
+  label='Libre de fauna nociva'
+  optionName='optionLibre'
+  imageKey='imageLibreFauna'
+  descriptionKey='fauna'
+  option='No'
+  formData={formData}
+  handleButtonClick={handleButtonClick}
+  handleInputChange={handleInputChange}
+  handleFileChange={handleFileChange3}
+/>
 
-              <ImageComponents
-                label='Carga en buen estado'
-                optionName='optionCarga'
-                imageKey='imageCargaBuenEstado'
-                descriptionKey='carga'
-                option='No'
-                formData={formData}
-                handleButtonClick={handleButtonClick}
-                handleInputChange={handleInputChange}
-                handleFileChange={handleFileChange3}
-              />
+<ImageComponents
+  label='Carga en buen estado'
+  optionName='optionCarga'
+  imageKey='imageCargaBuenEstado'
+  descriptionKey='carga'
+  option='No'
+  formData={formData}
+  handleButtonClick={handleButtonClick}
+  handleInputChange={handleInputChange}
+  handleFileChange={handleFileChange3}
+/>
 
-              <ImageComponents
-                label='Seguridad de carga'
-                optionName='optionSeguridad'
-                imageKey='imageSeguridadCarga'
-                descriptionKey='seguridadCarga'
-                option='No'
-                formData={formData}
-                handleButtonClick={handleButtonClick}
-                handleInputChange={handleInputChange}
-                handleFileChange={handleFileChange3}
-              />
+<ImageComponents
+  label='Seguridad de carga'
+  optionName='optionSeguridad'
+  imageKey='imageSeguridadCarga'
+  descriptionKey='seguridadCarga'
+  option='No'
+  formData={formData}
+  handleButtonClick={handleButtonClick}
+  handleInputChange={handleInputChange}
+  handleFileChange={handleFileChange3}
+/>
 
-              <ImageComponents
-                label='Sellado'
-                optionName='optionSellado'
-                imageKey='imageSellado'
-                descriptionKey='sellado'
-                option='No'
-                formData={formData}
-                handleButtonClick={handleButtonClick}
-                handleInputChange={handleInputChange}
-                handleFileChange={handleFileChange3}
-              />
+<ImageComponents
+  label='Sellado'
+  optionName='optionSellado'
+  imageKey='imageSellado'
+  descriptionKey='sellado'
+  option='No'
+  formData={formData}
+  handleButtonClick={handleButtonClick}
+  handleInputChange={handleInputChange}
+  handleFileChange={handleFileChange3}
+/>
 
-            </AccordionContent>
+</AccordionContent>
           </AccordionItem>
         </Accordion>
+
+   
 
         <Accordion type='single' collapsible style={{ padding: '8px 0' }}>
           <AccordionItem value='item-6'>
@@ -1142,7 +1041,7 @@ const ActaDeLlegada = (): JSX.Element => {
                   >
                     <Button variant='default'>Descargar PDF</Button>
                   </PDFDownloadLink>
-                  )
+                )
                 : (
                   <Dialog>
                     <DialogTrigger asChild>
@@ -1173,10 +1072,10 @@ const ActaDeLlegada = (): JSX.Element => {
                       </div>
                     </DialogContent>
                   </Dialog>
-                  )
+                )
             })()}
           </div>
-          )
+        )
         : (
           <Dialog>
             <DialogTrigger asChild>
@@ -1185,10 +1084,7 @@ const ActaDeLlegada = (): JSX.Element => {
             <DialogContent className='sm:max-w-[800px]'>
               <DialogHeader>
                 <DialogTitle>Vista del Documento</DialogTitle>
-                <DialogDescription>
-                  Navega por el documento PDF y haz clic en los botones para moverte
-                  entre las páginas.
-                </DialogDescription>
+
               </DialogHeader>
               <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                 <PDFViewer width='100%' height='500px'>
@@ -1209,7 +1105,7 @@ const ActaDeLlegada = (): JSX.Element => {
               </div>
             </DialogContent>
           </Dialog>
-          )}
+        )}
     </Layout>
   )
 }

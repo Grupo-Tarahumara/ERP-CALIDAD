@@ -27,14 +27,7 @@ export const verificationOC = async (oc: string): Promise<boolean> => {
   }
 
   if (data?.length > 0 && data != null) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Elemento existente',
-      text: 'La orden de compra ya fue registrada con este ID.',
-      confirmButtonText: 'Aceptar',
-      confirmButtonColor: '#9A3424',
-      iconColor: '#9A3424'
-    })
+   
     return false
   }
 
@@ -48,7 +41,7 @@ export const insert = async (formData: any): Promise<void> => {
 
     const state = await verificationOC(formData.oc)
 
-    if (state && incompleteFiles.length <= 0) {
+    if (state ) {
       const { data, error } = await supabase
         .from('ActaDescarga')
         .insert([{
@@ -113,8 +106,25 @@ export const insert = async (formData: any): Promise<void> => {
           insp_name: formData.nombreInspector,
           driver_sign: formData.nombreChofer
         }])
+
+        Swal.fire({
+          icon: 'warning',
+          title: 'Datos guardados exitosamente',
+          text: 'La orden de compra ya fue registrada con este ID.',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#9A3424',
+          iconColor: '#9A3424'
+        })
+        
     } else {
-      console.log(' is not true ')
+      Swal.fire({
+        icon: 'warning',
+        title: 'Elemento existente',
+        text: 'La orden de compra ya fue registrada con este ID.',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#9A3424',
+        iconColor: '#9A3424'
+      })
     }
   } catch (e) {
     console.log('El error es:', e)
@@ -191,7 +201,14 @@ export const update = async (formData: any) => {
     if (error != null) {
       console.log('Hubo un error:', error)
     } else {
-      console.log('Datos insertados correctamente:', data)
+      Swal.fire({
+        icon: 'warning',
+        title: 'Actualizacion',
+        text: 'Datos actualizados correctamente',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#9A3424',
+        iconColor: '#9A3424'
+      })
     }
   } catch (e) {
     console.log('El error es:', e)

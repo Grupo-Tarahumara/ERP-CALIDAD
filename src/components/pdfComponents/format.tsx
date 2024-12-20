@@ -53,7 +53,7 @@ export const formInitial = {
   optionSeguridad: '',
   optionSellado: '',
   optiontarimasDanadas: '',
-
+  optioncajasIdentificadas: '',
   optiondanadasManiobra: '',
   imagecumpletermografo: [],
   imagecumpletermografo2: [],
@@ -65,10 +65,10 @@ export const formInitial = {
   imageSeguridadCarga: [],
   imageSellado: [],
   imagestarimasDanadas: [],
-
+  imagescajasIdentificadas: [],
   imagesdanadasManiobra: [],
   tarimasDanadas: '',
-
+  cajasIdentificadas: '',
   danadasManiobra: ''
 }
 
@@ -113,7 +113,7 @@ export interface FormData {
   optionSellado?: string
   sellado?: string
   tarimasDanadas?: string
-
+  cajasIdentificadas?: string
   danadasManiobra?: string
   tempAPuerta?: string
   tempMPuerta?: string
@@ -137,13 +137,13 @@ export interface FormData {
   imageCargaBuenEstado?: string[]
   imageSeguridadCarga?: string[]
   imageSellado?: string[]
-
+  imagescajasIdentificadas?: string[]
   imagestarimasDanadas?: string[]
   imagesdanadasManiobra?: string[]
   imagecumpletermografo?: string[]
   imagecumpletermografo2?: string[]
   optiontarimasDanadas?: string
-
+  optioncajasIdentificadas?: string
   optiondanadasManiobra?: string
 }
 

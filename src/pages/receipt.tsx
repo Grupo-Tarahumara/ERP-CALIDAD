@@ -81,6 +81,7 @@ const ActaDeLlegada = (): JSX.Element => {
 
   const handleInsert = async (): Promise<void> => {
     await insert(formData) // Llama a la función insert y pasa formData
+   
   }
 
   const handleUpdate = async (): Promise<void> => {
@@ -192,8 +193,6 @@ const ActaDeLlegada = (): JSX.Element => {
         : fileArray
     }))
   }
-
-  useEffect(() => {
     const getActasData = async (): Promise<void> => {
       const data = await fetchActas()
       if (data != null) {
@@ -211,6 +210,8 @@ const ActaDeLlegada = (): JSX.Element => {
         )
       }
     }
+  useEffect(() => {
+
 
     void getActasData()
 
@@ -998,6 +999,11 @@ const ActaDeLlegada = (): JSX.Element => {
         <Button
           onClick={() => {
             void handleInsert()
+            console.log(formData.oc)
+          
+            
+          setValue(formData.oc)
+            
           }}
         >
           Guardar datos en la Bd
@@ -1006,7 +1012,9 @@ const ActaDeLlegada = (): JSX.Element => {
         <Button
           onClick={() => {
             void handleUpdate()
-            // void getActasData()
+
+          
+            
           }}
         >
           Actualizar en la base de datos

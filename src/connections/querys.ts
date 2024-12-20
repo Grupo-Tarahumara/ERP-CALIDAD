@@ -1,5 +1,6 @@
 import { supabase } from './supabase'
 import Swal from 'sweetalert2'
+import { getIncompleteFields } from '@/components/validationEmptyFiles'
 
 export const query = async () => {
   try {
@@ -42,10 +43,13 @@ export const verificationOC = async (oc: string): Promise<boolean> => {
 
 export const insert = async (formData: any): Promise<void> => {
   try {
+    const incompleteFiles = getIncompleteFields(formData)
+    console.log(incompleteFiles.length)
+
     const state = await verificationOC(formData.oc)
 
-    if (state) {
-      await supabase
+    if (state && incompleteFiles.length <= 0) {
+      const { data, error } = await supabase
         .from('ActaDescarga')
         .insert([{
           fecha: formData.fecha,

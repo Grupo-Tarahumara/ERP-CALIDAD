@@ -26,11 +26,18 @@ const imageComponents: React.FC<ModuleProps> = ({
   handleFileChange
 }) => {
   return (
-    <div>
-      <label>{label}: </label>
-      <div style={{ marginBottom: 20 }}>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        marginBottom: '20px',
+        gap: '10px' // Espacio entre los botones "Sí" y "No", y la descripción
+      }}
+    >
+      <label style={{ flex: '0 0 50px', fontWeight: 'bold' }}>{label}: </label>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <Button
-          style={{ flex: 5, marginRight: '10px' }}
+          style={{ marginRight: '0' }}
           name={optionName}
           value='Si'
           onClick={handleButtonClick}
@@ -38,15 +45,32 @@ const imageComponents: React.FC<ModuleProps> = ({
           Sí
         </Button>
         <Button
+          style={{ marginRight: '0' }}
           name={optionName}
           value='No'
           onClick={handleButtonClick}
         >
           No
         </Button>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <label style={{ fontWeight: 'bold' }}>Pon una descripción</label>
+          <Input
+            type='text'
+            name={descriptionKey}
+            value={formData[descriptionKey]}
+            onChange={handleInputChange}
+            style={{
+              padding: '8px',
+              borderRadius: '4px',
+              border: '1px solid #ccc',
+              width: '200px' // Tamaño fijo para el input
+            }}
+          />
+        </div>
         {formData[optionName] === option && (
           <div>
-            <div style={{ marginBottom: 30 }}>
+            <div style={{ marginTop: '20px' }}>
               <Button>
                 <label
                   htmlFor={`file-input-${imageKey}`}
@@ -98,13 +122,6 @@ const imageComponents: React.FC<ModuleProps> = ({
           </div>
         )}
       </div>
-      <label style={{ marginBottom: 30 }}>Pon una descripción </label>
-      <Input
-        type='text'
-        name={descriptionKey}
-        value={formData[descriptionKey]}
-        onChange={handleInputChange}
-      />
     </div>
   )
 }

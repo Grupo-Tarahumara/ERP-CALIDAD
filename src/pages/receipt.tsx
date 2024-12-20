@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input'
 import Layout from '../components/Layout'
 import SignatureCanvas from 'react-signature-canvas'
 import { isMobile, isTablet } from 'react-device-detect'
-import { fruitOptions } from '@/components/option'
 import {
   Accordion,
   AccordionContent,
@@ -57,6 +56,7 @@ import { formInitial, FormData, Acta } from '../components/pdfComponents/format'
 
 import ActaPDF from '../components/pdfComponents/pdfView'
 import DownloadPDF from '@/components/pdfComponents/PdfDownload'
+import { getIncompleteFields } from '@/components/validationEmptyFiles'
 
 import ImageComponents from '@/components/imageComponents'
 
@@ -193,17 +193,6 @@ const ActaDeLlegada = (): JSX.Element => {
         : fileArray
     }))
   }
-  const getActasData = async (): Promise<void> => {
-    const data = await fetchActas()
-
-    if (data != null) {
-      setActasList(
-        data.map((acta: any) => ({
-          ...acta
-        }))
-      )
-    }
-  }
 
   useEffect(() => {
     const getActasData = async (): Promise<void> => {
@@ -302,24 +291,6 @@ const ActaDeLlegada = (): JSX.Element => {
     }
   }
 
-  const getIncompleteFields = (data: FormData): string[] => {
-    // Filtra las claves cuyo valor sea `undefined`, vacío, o no válido, excluyendo las de imágenes y opciones
-    const excludedFields = [
-      'imagecumpletermografo', 'imageCajaCerrada', 'imageCargaBuenEstado',
-      'imagestarimasDanadas', 'imagecumpletermografo2', 'imageLonaBuenEstado',
-      'imageSeguridadCarga', 'imagescajasIdentificadas', 'imageLimpio',
-      'imageLibreFauna', 'imageSellado', 'imagesdanadasManiobra'
-    ]
-
-    return Object.keys(data).filter((key) => {
-      // Ignorar claves que estén en el array `excludedFields`
-      if (excludedFields.includes(key)) return false
-
-      const value = data[key]
-      return value === undefined || value === null || value === '' ||
-        (Array.isArray(value) && value.length === 0)
-    })
-  }
   const incompleteFields = getIncompleteFields(formData)
 
   return (
@@ -390,12 +361,12 @@ const ActaDeLlegada = (): JSX.Element => {
                     { label: 'Fecha:', type: 'date', name: 'fecha' },
                     {
                       label: 'Inicio de verificación:',
-                      type: 'time',
+                      type: 'text',
                       name: 'inicioVerificacion'
                     },
                     {
                       label: 'Término de verificación:',
-                      type: 'time',
+                      type: 'text',
                       name: 'terminoVerificacion'
                     },
                     { label: 'O.C.:', type: 'text', name: 'oc' },
@@ -405,14 +376,14 @@ const ActaDeLlegada = (): JSX.Element => {
                     { label: 'Especie:', type: 'text', name: 'especie' },
                     { label: 'Variedades:', type: 'text', name: 'variedades' },
                     {
-                      label: 'Cajas recibidas:',
-                      type: 'text',
-                      name: 'cajasRecibidas'
-                    },
-                    {
                       label: 'Frío de descarga:',
                       type: 'text',
                       name: 'frioDescarga'
+                    },
+                    {
+                      label: 'Cajas recibidas:',
+                      type: 'text',
+                      name: 'cajasRecibidas'
                     }
                   ].map(({ label, type, name }) => (
                     <div
@@ -515,34 +486,121 @@ const ActaDeLlegada = (): JSX.Element => {
             </AccordionTrigger>
             <AccordionContent>
               {[
-                { label: 'Temperatura de set point:', name: 'tempSetPoint' },
                 {
-                  label: 'Observaciones set point:',
-                  name: 'observacionesSetPoint'
+                  label1: 'Temperatura de set point:',
+                  name1: 'tempSetPoint',
+                  label2: 'Observaciones set point:',
+                  name2: 'observacionesSetPoint'
                 },
-                { label: 'Temperatura de pantalla:', name: 'tempPantalla' },
                 {
-                  label: 'Observaciones pantalla:',
-                  name: 'observacionesPantalla'
-                },
-                { label: 'Temperatura de origen:', name: 'tempOrigen' },
-                { label: 'Temperatura de destino:', name: 'tempDestino' }
-              ].map(({ label, name }) => (
+                  label1: 'Temperatura de pantalla:',
+                  name1: 'tempPantalla',
+                  label2: 'Observaciones pantalla:',
+                  name2: 'observacionesPantalla'
+                }
+              ].map(({ label1, name1, label2, name2 }) => (
                 <div
-                  key={name}
+                  key={name1}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
                     marginBottom: '10px'
                   }}
                 >
-                  <label style={{ flex: '0 0 250px', fontWeight: 'bold' }}>
-                    {label}
+                  {/* Sección de Temperatura */}
+                  <div style={{ flex: '1', marginRight: '10px' }}>
+                    <label style={{ display: 'block', fontWeight: 'bold' }}>{label1}</label>
+                    <Input
+                      type='text'
+                      name={name1}
+                      value={formData[name1]}
+                      onChange={handleInputChange}
+                      style={{
+                        width: '100%',
+                        padding: '8px',
+                        borderRadius: '4px',
+                        border: '1px solid #ccc'
+                      }}
+                    />
+                  </div>
+
+                  {/* Sección de Observaciones */}
+                  <div style={{ flex: '1' }}>
+                    <label style={{ display: 'block', fontWeight: 'bold' }}>{label2}</label>
+                    <Input
+                      type='text'
+                      name={name2}
+                      value={formData[name2]}
+                      onChange={handleInputChange}
+                      style={{
+                        width: '100%',
+                        padding: '8px',
+                        borderRadius: '4px',
+                        border: '1px solid #ccc'
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginBottom: '20px',
+                  gap: '20px' // Espacio entre las dos secciones
+                }}
+              >
+                {/* Sección para "Cumple termógrafo origen" y botones */}
+                <div style={{ display: 'flex', alignItems: 'center', flex: '1' }}>
+                  <label
+                    style={{
+                      flex: '0 0 250px',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    Cumple termógrafo origen:
+                  </label>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <Button
+                      style={{
+                        padding: '8px 16px',
+                        borderRadius: '4px'
+                      }}
+                      name='option'
+                      value='Si'
+                      onClick={handleButtonClick}
+                    >
+                      Sí
+                    </Button>
+                    <Button
+                      style={{
+                        padding: '8px 16px',
+                        borderRadius: '4px'
+                      }}
+                      name='option'
+                      value='No'
+                      onClick={handleButtonClick}
+                    >
+                      No
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Sección para "Temperatura origen termógrafo" y su input */}
+                <div style={{ display: 'flex', alignItems: 'center', flex: '3' }}>
+                  <label
+                    style={{
+                      flex: '0 0 250px',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    Temperatura origen termógrafo:
                   </label>
                   <Input
                     type='text'
-                    name={name}
-                    value={formData[name]}
+                    name='tempOrigen'
+                    value={formData.tempOrigen}
                     onChange={handleInputChange}
                     style={{
                       flex: '1',
@@ -552,164 +610,55 @@ const ActaDeLlegada = (): JSX.Element => {
                     }}
                   />
                 </div>
-              ))}
+              </div>
+
               <div
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  marginBottom: '10px'
+                  marginBottom: '20px',
+                  gap: '20px' // Espacio entre las dos secciones
                 }}
               >
                 <label style={{ flex: '0 0 250px', fontWeight: 'bold' }}>
-                  Termógrafo
+                  cumple Territorio nacional:
                 </label>
-              </div>
-              <label style={{ flex: '0 0 250px', fontWeight: 'bold' }}>
-                cumple termografo:
-              </label>
-              <div style={{ marginBottom: 20 }}>
-                <Button
-                  style={{ flex: 5, marginRight: '10px' }}
-                  name='option'
-                  value='Si'
-                  onClick={handleButtonClick}
-                >
-                  {' '}
-                  Sí{' '}
-                </Button>
-                <Button name='option' value='No' onClick={handleButtonClick}>
-                  {' '}
-                  No{' '}
-                </Button>
-                {formData.option === 'No' && (
-                  <div>
-                    <div style={{ marginBottom: 30 }}>
-                      <Button>
-                        <label
-                          htmlFor='file-input-termografo1'
-                          style={{ cursor: 'pointer' }}
-                        >
-                          Seleccionar Imagen
-                        </label>
-                      </Button>
 
-                      {(formData.imagecumpletermografo?.length ?? 0) < 8
-                        ? (
-                          <input
-                            type='file'
-                            id='file-input-termografo1'
-                            accept='image/*'
-                            multiple
-                            style={{ display: 'none' }}
-                            onChange={(e) =>
-                              handleFileChange3(e, 'imagecumpletermografo')}
-                          />
-                          )
-                        : (
-                          <p style={{ color: 'red', marginTop: '10px' }}>
-                            {' '}
-                            No puedes agregar más de 8 imágenes{' '}
-                          </p>
-                          )}
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexWrap: 'wrap',
-                          marginTop: '20px'
-                        }}
-                      >
-                        {formData.imagecumpletermografo?.map(
-                          (imageUrl: string, index: number) => (
-                            <img
-                              key={index}
-                              src={imageUrl}
-                              style={{
-                                width: '200px',
-                                height: '200px',
-                                margin: '10px',
-                                objectFit: 'cover'
-                              }}
-                            />
-                          )
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <label style={{ flex: '0 0 250px', fontWeight: 'bold' }}>
-                cumple termografo2:
-              </label>
-              <div style={{ marginBottom: 20 }}>
-                <Button
-                  style={{ flex: 5, marginRight: '10px' }}
-                  name='option2'
-                  value='Si'
-                  onClick={handleButtonClick}
-                >
-                  {' '}
-                  Sí{' '}
-                </Button>
-                <Button name='option2' value='No' onClick={handleButtonClick}>
-                  {' '}
-                  No{' '}
-                </Button>
-                {formData.option2 === 'No' && (
-                  <div>
-                    <div style={{ marginBottom: 30 }}>
-                      <Button>
-                        <label
-                          htmlFor='file-input-termografo2'
-                          style={{ cursor: 'pointer' }}
-                        >
-                          Seleccionar Imagen
-                        </label>
-                      </Button>
-                      {(formData.imagecumpletermografo2?.length ?? 0) < 8
-                        ? (
-                          <input
-                            type='file'
-                            id='file-input-termografo2'
-                            accept='image/*'
-                            multiple
-                            style={{ display: 'none' }}
-                            onChange={(e) =>
-                              handleFileChange3(e, 'imagecumpletermografo2')}
-                          />
-                          )
-                        : (
-                          <p style={{ color: 'red', marginTop: '10px' }}>
-                            {' '}
-                            No puedes agregar más de 8 imágenes{' '}
-                          </p>
-                          )}
+                <div style={{ marginBottom: 20 }}>
+                  <Button
+                    style={{ flex: 5, marginRight: '10px' }}
+                    name='option2'
+                    value='Si'
+                    onClick={handleButtonClick}
+                  >
+                    {' '}
+                    Sí{' '}
+                  </Button>
+                  <Button name='option2' value='No' onClick={handleButtonClick}>
+                    {' '}
+                    No{' '}
+                  </Button>
 
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexWrap: 'wrap',
-                          marginTop: '20px'
-                        }}
-                      >
-                        {formData.imagecumpletermografo2?.map(
-                          (imageUrl: string, index: number) => (
-                            <img
-                              key={index}
-                              src={imageUrl}
-                              style={{
-                                width: '200px',
-                                height: '200px',
-                                margin: '10px',
-                                objectFit: 'cover'
-                              }}
-                            />
-                          )
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '10px'
+                  }}
+                >
+                  <label style={{ flex: '0 0 250px', fontWeight: 'bold' }}>Temperatura Territorio nacional  </label>
+                  <Input
+                    type='text'
+                    name='tempDestino'
+                    value={formData.tempDestino}
+                    onChange={handleInputChange}
+                  />
+                </div>
               </div>
+
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -776,9 +725,9 @@ const ActaDeLlegada = (): JSX.Element => {
                 formData={formData}
                 handleButtonClick={handleButtonClick}
                 handleInputChange={handleInputChange}
-                handleFileChange={handleFileChange3}  
+                handleFileChange={handleFileChange3}
               />
-              
+
               <ImageComponents
                 label='Carga en buen estado'
                 optionName='optionCarga'
@@ -832,7 +781,7 @@ const ActaDeLlegada = (): JSX.Element => {
                 cursor: 'pointer'
               }}
             >
-              Maniobras de Transbordo
+              Transbordo
             </AccordionTrigger>
             <AccordionContent>
               <ImageComponents
@@ -1026,11 +975,11 @@ const ActaDeLlegada = (): JSX.Element => {
                     <SelectValue placeholder='Selecciona una fruta' />
                   </SelectTrigger>
                   <SelectContent>
-                    {fruitOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
+                    <SelectItem value='4'>Manzanas (4°C)</SelectItem>
+                    <SelectItem value='7'>Plátanos (7°C)</SelectItem>
+                    <SelectItem value='1'>Uvas (1°C)</SelectItem>
+                    <SelectItem value='0'>Fresas (0°C)</SelectItem>
+                    <SelectItem value='-1'>Mango (-1°C)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -1038,7 +987,7 @@ const ActaDeLlegada = (): JSX.Element => {
           </AccordionItem>
         </Accordion>
 
-        <h2>Resultados de la Investigación por Incumplimiento</h2>
+        <h2>Resultados de la Investigación</h2>
         <Input
           type='text'
           name='resultadosInv'
@@ -1169,7 +1118,7 @@ const ActaDeLlegada = (): JSX.Element => {
         <Button
           onClick={() => {
             void handleUpdate()
-            void getActasData()
+            // void getActasData()
           }}
         >
           Actualizar en la base de datos
@@ -1188,7 +1137,7 @@ const ActaDeLlegada = (): JSX.Element => {
                         firmaBase64Inspector={firmaBase64Inspector}
                         firmaBase64Chofer={firmaBase64Chofer}
                       />
-                  }
+                    }
                     fileName={`Acta_${formData.oc ?? 'Descarga'}.pdf`}
                   >
                     <Button variant='default'>Descargar PDF</Button>

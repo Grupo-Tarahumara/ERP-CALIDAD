@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Layout from '../components/Layout'
 import SignatureCanvas from 'react-signature-canvas'
+import { fruitOptions } from '@/components/option'
 import { isMobile, isTablet } from 'react-device-detect'
 import {
   Accordion,
@@ -361,12 +362,12 @@ const ActaDeLlegada = (): JSX.Element => {
                     { label: 'Fecha:', type: 'date', name: 'fecha' },
                     {
                       label: 'Inicio de verificación:',
-                      type: 'text',
+                      type: 'time',
                       name: 'inicioVerificacion'
                     },
                     {
                       label: 'Término de verificación:',
-                      type: 'text',
+                      type: 'time',
                       name: 'terminoVerificacion'
                     },
                     { label: 'O.C.:', type: 'text', name: 'oc' },
@@ -376,15 +377,15 @@ const ActaDeLlegada = (): JSX.Element => {
                     { label: 'Especie:', type: 'text', name: 'especie' },
                     { label: 'Variedades:', type: 'text', name: 'variedades' },
                     {
-                      label: 'Frío de descarga:',
-                      type: 'text',
-                      name: 'frioDescarga'
-                    },
-                    {
                       label: 'Cajas recibidas:',
                       type: 'text',
                       name: 'cajasRecibidas'
-                    }
+                    },
+                    {
+                      label: 'Frío de descarga:',
+                      type: 'text',
+                      name: 'frioDescarga'
+                    }                    
                   ].map(({ label, type, name }) => (
                     <div
                       key={name}
@@ -751,7 +752,6 @@ const ActaDeLlegada = (): JSX.Element => {
                 handleInputChange={handleInputChange}
                 handleFileChange={handleFileChange3}
               />
-
               <ImageComponents
                 label='Sellado'
                 optionName='optionSellado'
@@ -830,7 +830,7 @@ const ActaDeLlegada = (): JSX.Element => {
               <table>
                 <thead>
                   <tr>
-                    <th />
+                    <th></th>
                     <th>
                       <h3>Puerta</h3>
                     </th>
@@ -964,11 +964,11 @@ const ActaDeLlegada = (): JSX.Element => {
                     <SelectValue placeholder='Selecciona una fruta' />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value='4'>Manzanas (4°C)</SelectItem>
-                    <SelectItem value='7'>Plátanos (7°C)</SelectItem>
-                    <SelectItem value='1'>Uvas (1°C)</SelectItem>
-                    <SelectItem value='0'>Fresas (0°C)</SelectItem>
-                    <SelectItem value='-1'>Mango (-1°C)</SelectItem>
+                    {fruitOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -976,7 +976,7 @@ const ActaDeLlegada = (): JSX.Element => {
           </AccordionItem>
         </Accordion>
 
-        <h2>Resultados de la Investigación</h2>
+        <h2>Resultados de la Investigación por Incumplimiento</h2>
         <Input
           type='text'
           name='resultadosInv'

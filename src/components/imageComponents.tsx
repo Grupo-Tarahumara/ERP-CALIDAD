@@ -31,11 +31,12 @@ const imageComponents: React.FC<ModuleProps> = ({
         display: 'flex',
         alignItems: 'center',
         marginBottom: '20px',
-        gap: '10px' // Espacio entre los botones "Sí" y "No", y la descripción
+        gap: '10px',
+        width: '100%'
       }}
     >
-      <label style={{ flex: '0 0 50px', fontWeight: 'bold' }}>{label}: </label>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      <label style={{ flex: 0.25, fontWeight: 'bold' }}>{label}: </label>
+      <div style={{ flex: 0.8, display: 'flex', alignItems: 'center', gap: '10px' }}>
         <Button
           style={{ marginRight: '0' }}
           name={optionName}
@@ -53,18 +54,18 @@ const imageComponents: React.FC<ModuleProps> = ({
           No
         </Button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <label style={{ fontWeight: 'bold' }}>Pon una descripción</label>
+        <div style={{ flex: 1, alignItems: 'center', gap: '10px' }}>
+          <label style={{ width: '70%', fontWeight: 'bold' }}>Pon una descripción</label>
           <Input
             type='text'
             name={descriptionKey}
             value={formData[descriptionKey]}
             onChange={handleInputChange}
             style={{
+              flex: 1,
               padding: '8px',
               borderRadius: '4px',
-              border: '1px solid #ccc',
-              width: '200px' // Tamaño fijo para el input
+              border: '1px solid #ccc'
             }}
           />
         </div>
@@ -81,6 +82,7 @@ const imageComponents: React.FC<ModuleProps> = ({
               </Button>
               {(formData[imageKey] != null && formData[imageKey].length < 8)
                 ? (
+
                   <input
                     type='file'
                     id={`file-input-${imageKey}`}

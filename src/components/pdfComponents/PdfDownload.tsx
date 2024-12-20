@@ -386,16 +386,6 @@ const DownloadPDF: React.FC<DownloadPDFProps> = ({ formData, firmaBase64Inspecto
             </View>
             <View style={styles.tableRow}>
               <Text style={[styles.cellLabelWhite, { flex: 0.7 }]}>
-                Cajas identificadas :
-              </Text>
-              <Text style={[styles.cellLabelWhite, { flex: 0.4 }]}>SI</Text>
-              <Text style={[styles.cellLabelWhite, { flex: 0.4 }]}>NO</Text>
-              <Text style={[styles.cellLabelWhite, { flex: 1.3 }]}>
-                #{formData.cajasIdentificadas}
-              </Text>
-            </View>
-            <View style={styles.tableRow}>
-              <Text style={[styles.cellLabelWhite, { flex: 0.7 }]}>
                 Cajas dañadas por maniobra:
               </Text>
               <Text style={[styles.cellLabelWhite, { flex: 0.4 }]}> SI </Text>

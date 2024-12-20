@@ -3,7 +3,7 @@ export const getIncompleteFields = (data: FormData): string[] => {
   const excludedFields = [
     'imagecumpletermografo', 'imageCajaCerrada', 'imageCargaBuenEstado',
     'imagestarimasDanadas', 'imagecumpletermografo2', 'imageLonaBuenEstado',
-    'imageSeguridadCarga', 'imagescajasIdentificadas', 'imageLimpio',
+    'imageSeguridadCarga', 'imageLimpio',
     'imageLibreFauna', 'imageSellado', 'imagesdanadasManiobra'
   ]
 

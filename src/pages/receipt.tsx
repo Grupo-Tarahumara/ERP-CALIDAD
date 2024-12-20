@@ -169,7 +169,7 @@ const ActaDeLlegada = (): JSX.Element => {
         optionSeguridad: selectedActa.sec_obs ?? '',
         optionSellado: selectedActa.seal_obs ?? '',
         tarimasDanadas: selectedActa.pallet_dmg ?? '',
-        cajasIdentificadas: selectedActa.box_num ?? '',
+
         danadasManiobra: selectedActa.dmg_num ?? ''
       }))
     }
@@ -785,7 +785,7 @@ const ActaDeLlegada = (): JSX.Element => {
             </AccordionTrigger>
             <AccordionContent>
               <ImageComponents
-                label='Hay tarimas dañadas?:'
+                label='Hay tarimas dañadas?'
                 optionName='optiontarimasDanadas'
                 imageKey='imagestarimasDanadas'
                 descriptionKey='tarimasDanadas'
@@ -796,17 +796,6 @@ const ActaDeLlegada = (): JSX.Element => {
                 handleFileChange={handleFileChange3}
               />
 
-              <ImageComponents
-                label='Cajas Identificadas'
-                optionName='optioncajasIdentificadas'
-                imageKey='imagescajasIdentificadas'
-                descriptionKey='cajasIdentificadas'
-                option='Si'
-                formData={formData}
-                handleButtonClick={handleButtonClick}
-                handleInputChange={handleInputChange}
-                handleFileChange={handleFileChange3}
-              />
               <ImageComponents
                 label='Cajas Dañadas por Maniobra'
                 optionName='optiondanadasManiobra'

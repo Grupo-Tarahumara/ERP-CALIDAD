@@ -1,3 +1,5 @@
+import { FormData } from './pdfComponents/format'
+
 export const getIncompleteFields = (data: FormData): string[] => {
   // Filtra las claves cuyo valor sea `undefined`, vacío, o no válido, excluyendo las de imágenes y opciones
   const excludedFields = [

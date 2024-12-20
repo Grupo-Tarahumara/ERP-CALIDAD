@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import Layout from '../components/Layout'
 import SignatureCanvas from 'react-signature-canvas'
 import { fruitOptions } from '@/components/option'
-import { isMobile, isTablet } from 'react-device-detect'
+import { isAndroid, isMobile, isTablet } from 'react-device-detect'
 import {
   Accordion,
   AccordionContent,
@@ -112,7 +112,6 @@ const ActaDeLlegada = (): JSX.Element => {
 
     // Buscar detalles del acta seleccionada
     const selectedActa = actasList.find((acta) => acta.oc === oc)
-    console.log('lo que tiene acta es', selectedActa)
 
     if (selectedActa != null) {
       // Actualizar formData con los datos del acta seleccionada
@@ -385,7 +384,7 @@ const ActaDeLlegada = (): JSX.Element => {
                       label: 'Frío de descarga:',
                       type: 'text',
                       name: 'frioDescarga'
-                    }                    
+                    }
                   ].map(({ label, type, name }) => (
                     <div
                       key={name}
@@ -544,141 +543,31 @@ const ActaDeLlegada = (): JSX.Element => {
                 </div>
               ))}
 
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginBottom: '20px',
-                  gap: '20px' // Espacio entre las dos secciones
-                }}
-              >
-                {/* Sección para "Cumple termógrafo origen" y botones */}
-                <div style={{ display: 'flex', alignItems: 'center', flex: '1' }}>
-                  <label
-                    style={{
-                      flex: '0 0 250px',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    Cumple termógrafo origen:
-                  </label>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <Button
-                      style={{
-                        padding: '8px 16px',
-                        borderRadius: '4px'
-                      }}
-                      name='option'
-                      value='Si'
-                      onClick={handleButtonClick}
-                    >
-                      Sí
-                    </Button>
-                    <Button
-                      style={{
-                        padding: '8px 16px',
-                        borderRadius: '4px'
-                      }}
-                      name='option'
-                      value='No'
-                      onClick={handleButtonClick}
-                    >
-                      No
-                    </Button>
-                  </div>
-                </div>
+              <ImageComponents
+                label='Temperatura origen'
+                optionName='option'
+                imageKey='tempOrigen'
+                descriptionKey='tempOrigen'
+                option='No'
+                formData={formData}
+                handleButtonClick={handleButtonClick}
+                handleInputChange={handleInputChange}
+                handleFileChange={handleFileChange3}
+              />
 
-                {/* Sección para "Temperatura origen termógrafo" y su input */}
-                <div style={{ display: 'flex', alignItems: 'center', flex: '3' }}>
-                  <label
-                    style={{
-                      flex: '0 0 250px',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    Temperatura origen termógrafo:
-                  </label>
-                  <Input
-                    type='text'
-                    name='tempOrigen'
-                    value={formData.tempOrigen}
-                    onChange={handleInputChange}
-                    style={{
-                      flex: '1',
-                      padding: '8px',
-                      borderRadius: '4px',
-                      border: '1px solid #ccc'
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginBottom: '20px',
-                  gap: '20px' // Espacio entre las dos secciones
-                }}
-              >
-                <label style={{ flex: '0 0 250px', fontWeight: 'bold' }}>
-                  cumple Territorio nacional:
-                </label>
-
-                <div style={{ marginBottom: 20 }}>
-                  <Button
-                    style={{ flex: 5, marginRight: '10px' }}
-                    name='option2'
-                    value='Si'
-                    onClick={handleButtonClick}
-                  >
-                    {' '}
-                    Sí{' '}
-                  </Button>
-                  <Button name='option2' value='No' onClick={handleButtonClick}>
-                    {' '}
-                    No{' '}
-                  </Button>
-
-                </div>
-
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    marginBottom: '10px'
-                  }}
-                >
-                  <label style={{ flex: '0 0 250px', fontWeight: 'bold' }}>Temperatura Territorio nacional  </label>
-                  <Input
-                    type='text'
-                    name='tempDestino'
-                    value={formData.tempDestino}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
+              <ImageComponents
+                label='Temperatura destino'
+                optionName='option2'
+                imageKey='tempDestino'
+                descriptionKey='tempDestino'
+                option='No'
+                formData={formData}
+                handleButtonClick={handleButtonClick}
+                handleInputChange={handleInputChange}
+                handleFileChange={handleFileChange3}
+              />
 
             </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-
-        <Accordion type='single' collapsible style={{ padding: '8px 0' }}>
-          <AccordionItem value='item-2'>
-            <AccordionTrigger
-              style={{
-                fontSize: '20px',
-                fontWeight: 'bold',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                border: '2px solid #7A2A1E',
-                textAlign: 'center',
-                cursor: 'pointer'
-              }}
-            >
-              Inspección de transporte
-            </AccordionTrigger>
             <AccordionContent>
 
               <ImageComponents
@@ -830,7 +719,7 @@ const ActaDeLlegada = (): JSX.Element => {
               <table>
                 <thead>
                   <tr>
-                    <th></th>
+                    <th />
                     <th>
                       <h3>Puerta</h3>
                     </th>
@@ -965,7 +854,7 @@ const ActaDeLlegada = (): JSX.Element => {
                   </SelectTrigger>
                   <SelectContent>
                     {fruitOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
+                      <SelectItem key={option.label} value={option.value}>
                         {option.label}
                       </SelectItem>
                     ))}
@@ -1104,6 +993,7 @@ const ActaDeLlegada = (): JSX.Element => {
         >
           Guardar datos en la Bd
         </Button>
+
         <Button
           onClick={() => {
             void handleUpdate()
@@ -1113,7 +1003,7 @@ const ActaDeLlegada = (): JSX.Element => {
           Actualizar en la base de datos
         </Button>
       </div>
-      {isMobile || isTablet
+      {isMobile || isAndroid || isTablet
         ? (
           <div style={{ padding: '10px', display: 'flex', justifyContent: 'center' }}>
             {(() => {
@@ -1174,10 +1064,7 @@ const ActaDeLlegada = (): JSX.Element => {
             <DialogContent className='sm:max-w-[800px]'>
               <DialogHeader>
                 <DialogTitle>Vista del Documento</DialogTitle>
-                <DialogDescription>
-                  Navega por el documento PDF y haz clic en los botones para moverte
-                  entre las páginas.
-                </DialogDescription>
+
               </DialogHeader>
               <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                 <PDFViewer width='100%' height='500px'>

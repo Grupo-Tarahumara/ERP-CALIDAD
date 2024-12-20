@@ -495,7 +495,7 @@ const ActaPDF: React.FC<ActaPDFProps> = ({
         <View style={[{ width: '30%' }]}>
           <Text style={styles.cellLabel}>Ideal</Text>
           <View style={[styles.tableRow, { height: 50 }]}>
-            <Text style={styles.cellValue}> {formData.tempIdeal}°C </Text>
+            <Text style={styles.cellValue}> {formData.tempIdeal} </Text>
           </View>
         </View>
       </View>
@@ -579,9 +579,7 @@ const ActaPDF: React.FC<ActaPDFProps> = ({
       </View>
     </Page>
 
-    {(formData.option === 'No' ||
-        formData.option2 === 'No' ||
-        formData.optionLibre === 'No' ||
+    {(formData.optionLibre === 'No' ||
         formData.optionCaja === 'No' ||
         formData.optionLona === 'No' ||
         formData.optionCarga === 'No' ||
@@ -606,101 +604,6 @@ const ActaPDF: React.FC<ActaPDFProps> = ({
             </View>
 
             <View>
-              {formData.option === 'No' && (
-                <>
-                  <View style={{ borderWidth: 1, borderColor: '#000' }}>
-                    <Text style={{ fontSize: '15px' }}>
-                      {' '}
-                      Evidencia No cumple con Termografo1{' '}
-                    </Text>
-
-                    <Text style={{ fontSize: '10px', paddingTop: 10 }}>
-                      {' '}
-                      {formData.limpio ?? ''}{' '}
-                    </Text>
-
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start'
-                      }}
-                    >
-                      {formData.imagecumpletermografo?.map(
-                        (imageUrl: string, index: number) => (
-                          <div
-                            key={index}
-                            style={{
-                              padding: '4px',
-                              borderRadius: '10px',
-                              textAlign: 'center'
-                            }}
-                          >
-                            <Image
-                              src={imageUrl}
-                              style={{
-                                width: '150px',
-                                height: '150px',
-                                borderRadius: '5px',
-                                marginBottom: '10px'
-                              }}
-                            />
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </View>
-                </>
-              )}
-              {formData.option2 === 'No' && (
-                <>
-                  <View style={{ borderWidth: 1, borderColor: '#000' }}>
-                    <Text style={{ fontSize: '15px' }}>
-                      {' '}
-                      Evidencia No cumple con Termografo2{' '}
-                    </Text>
-
-                    <Text style={{ fontSize: '10px', paddingTop: 10 }}>
-                      {' '}
-                      {formData.limpio ?? ''}{' '}
-                    </Text>
-
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start'
-                      }}
-                    >
-                      {formData.imagecumpletermografo2?.map(
-                        (imageUrl: string, index: number) => (
-                          <div
-                            key={index}
-                            style={{
-                              padding: '4px',
-                              borderRadius: '10px',
-                              textAlign: 'center'
-                            }}
-                          >
-                            <Image
-                              src={imageUrl}
-                              style={{
-                                width: '150px',
-                                height: '150px',
-                                borderRadius: '5px',
-                                marginBottom: '10px'
-                              }}
-                            />
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </View>
-                </>
-              )}
-
               {formData.optionLimpio === 'No' && (
                 <>
                   <View style={{ borderWidth: 1, borderColor: '#000' }}>

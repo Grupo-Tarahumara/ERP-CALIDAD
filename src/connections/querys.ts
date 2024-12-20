@@ -41,8 +41,8 @@ export const insert = async (formData: any): Promise<void> => {
 
     const state = await verificationOC(formData.oc)
 
-    if (state ) {
-      const { data, error } = await supabase
+    if (state && incompleteFiles.length <= 0) {
+      await supabase
         .from('ActaDescarga')
         .insert([{
           fecha: formData.fecha,

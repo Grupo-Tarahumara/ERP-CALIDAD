@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Layout from '../components/Layout'
 import SignatureCanvas from 'react-signature-canvas'
-import { isAndroid, isMobile, isTablet, isChrome,isBrowser, } from 'react-device-detect'
+import { fruitOptions } from '@/components/option'
+import { isAndroid, isMobile, isTablet } from 'react-device-detect'
 import {
   Accordion,
   AccordionContent,
@@ -361,12 +362,12 @@ const ActaDeLlegada = (): JSX.Element => {
                     { label: 'Fecha:', type: 'date', name: 'fecha' },
                     {
                       label: 'Inicio de verificación:',
-                      type: 'text',
+                      type: 'time',
                       name: 'inicioVerificacion'
                     },
                     {
                       label: 'Término de verificación:',
-                      type: 'text',
+                      type: 'time',
                       name: 'terminoVerificacion'
                     },
                     { label: 'O.C.:', type: 'text', name: 'oc' },
@@ -376,14 +377,14 @@ const ActaDeLlegada = (): JSX.Element => {
                     { label: 'Especie:', type: 'text', name: 'especie' },
                     { label: 'Variedades:', type: 'text', name: 'variedades' },
                     {
-                      label: 'Frío de descarga:',
-                      type: 'text',
-                      name: 'frioDescarga'
-                    },
-                    {
                       label: 'Cajas recibidas:',
                       type: 'text',
                       name: 'cajasRecibidas'
+                    },
+                    {
+                      label: 'Frío de descarga:',
+                      type: 'text',
+                      name: 'frioDescarga'
                     }
                   ].map(({ label, type, name }) => (
                     <div
@@ -543,129 +544,119 @@ const ActaDeLlegada = (): JSX.Element => {
                 </div>
               ))}
 
+              <ImageComponents
+                label='Temperatura origen'
+                optionName='option'
+                imageKey='tempOrigen'
+                descriptionKey='tempOrigen'
+                option='No'
+                formData={formData}
+                handleButtonClick={handleButtonClick}
+                handleInputChange={handleInputChange}
+                handleFileChange={handleFileChange3}
+              />
 
-
-                <ImageComponents
-                  label='Temperatura origen'
-                  optionName='option'
-                  imageKey='tempOrigen'
-                  descriptionKey='tempOrigen'
-                  option='No'
-                  formData={formData}
-                  handleButtonClick={handleButtonClick}
-                  handleInputChange={handleInputChange}
-                  handleFileChange={handleFileChange3}
-                />
-
-
-          
-
-            
-                <ImageComponents
-                  label='Temperatura destino'
-                  optionName='option2'
-                  imageKey='tempDestino'
-                  descriptionKey='tempDestino'
-                  option='No'
-                  formData={formData}
-                  handleButtonClick={handleButtonClick}
-                  handleInputChange={handleInputChange}
-                  handleFileChange={handleFileChange3}
-                />
-
+              <ImageComponents
+                label='Temperatura destino'
+                optionName='option2'
+                imageKey='tempDestino'
+                descriptionKey='tempDestino'
+                option='No'
+                formData={formData}
+                handleButtonClick={handleButtonClick}
+                handleInputChange={handleInputChange}
+                handleFileChange={handleFileChange3}
+              />
 
             </AccordionContent>
             <AccordionContent>
 
-<ImageComponents
-  label='Limpio'
-  optionName='optionLimpio'
-  imageKey='imageLimpio'
-  descriptionKey='limpio'
-  option='No'
-  formData={formData}
-  handleButtonClick={handleButtonClick}
-  handleInputChange={handleInputChange}
-  handleFileChange={handleFileChange3}
-/>
+              <ImageComponents
+                label='Limpio'
+                optionName='optionLimpio'
+                imageKey='imageLimpio'
+                descriptionKey='limpio'
+                option='No'
+                formData={formData}
+                handleButtonClick={handleButtonClick}
+                handleInputChange={handleInputChange}
+                handleFileChange={handleFileChange3}
+              />
 
-<ImageComponents
-  label='Caja cerrada, en buen estado'
-  optionName='optionCaja'
-  imageKey='imageCajaCerrada'
-  descriptionKey='cajaCerrada'
-  option='No'
-  formData={formData}
-  handleButtonClick={handleButtonClick}
-  handleInputChange={handleInputChange}
-  handleFileChange={handleFileChange3}
-/>
+              <ImageComponents
+                label='Caja cerrada, en buen estado'
+                optionName='optionCaja'
+                imageKey='imageCajaCerrada'
+                descriptionKey='cajaCerrada'
+                option='No'
+                formData={formData}
+                handleButtonClick={handleButtonClick}
+                handleInputChange={handleInputChange}
+                handleFileChange={handleFileChange3}
+              />
 
-<ImageComponents
-  label='Lona en buen estado'
-  optionName='optionLona'
-  imageKey='imageLonaBuenEstado'
-  descriptionKey='lona'
-  option='No'
-  formData={formData}
-  handleButtonClick={handleButtonClick}
-  handleInputChange={handleInputChange}
-  handleFileChange={handleFileChange3}
-/>
+              <ImageComponents
+                label='Lona en buen estado'
+                optionName='optionLona'
+                imageKey='imageLonaBuenEstado'
+                descriptionKey='lona'
+                option='No'
+                formData={formData}
+                handleButtonClick={handleButtonClick}
+                handleInputChange={handleInputChange}
+                handleFileChange={handleFileChange3}
+              />
 
-<ImageComponents
-  label='Libre de fauna nociva'
-  optionName='optionLibre'
-  imageKey='imageLibreFauna'
-  descriptionKey='fauna'
-  option='No'
-  formData={formData}
-  handleButtonClick={handleButtonClick}
-  handleInputChange={handleInputChange}
-  handleFileChange={handleFileChange3}
-/>
+              <ImageComponents
+                label='Libre de fauna nociva'
+                optionName='optionLibre'
+                imageKey='imageLibreFauna'
+                descriptionKey='fauna'
+                option='No'
+                formData={formData}
+                handleButtonClick={handleButtonClick}
+                handleInputChange={handleInputChange}
+                handleFileChange={handleFileChange3}
+              />
 
-<ImageComponents
-  label='Carga en buen estado'
-  optionName='optionCarga'
-  imageKey='imageCargaBuenEstado'
-  descriptionKey='carga'
-  option='No'
-  formData={formData}
-  handleButtonClick={handleButtonClick}
-  handleInputChange={handleInputChange}
-  handleFileChange={handleFileChange3}
-/>
+              <ImageComponents
+                label='Carga en buen estado'
+                optionName='optionCarga'
+                imageKey='imageCargaBuenEstado'
+                descriptionKey='carga'
+                option='No'
+                formData={formData}
+                handleButtonClick={handleButtonClick}
+                handleInputChange={handleInputChange}
+                handleFileChange={handleFileChange3}
+              />
 
-<ImageComponents
-  label='Seguridad de carga'
-  optionName='optionSeguridad'
-  imageKey='imageSeguridadCarga'
-  descriptionKey='seguridadCarga'
-  option='No'
-  formData={formData}
-  handleButtonClick={handleButtonClick}
-  handleInputChange={handleInputChange}
-  handleFileChange={handleFileChange3}
-/>
+              <ImageComponents
+                label='Seguridad de carga'
+                optionName='optionSeguridad'
+                imageKey='imageSeguridadCarga'
+                descriptionKey='seguridadCarga'
+                option='No'
+                formData={formData}
+                handleButtonClick={handleButtonClick}
+                handleInputChange={handleInputChange}
+                handleFileChange={handleFileChange3}
+              />
+              <ImageComponents
+                label='Sellado'
+                optionName='optionSellado'
+                imageKey='imageSellado'
+                descriptionKey='sellado'
+                option='No'
+                formData={formData}
+                handleButtonClick={handleButtonClick}
+                handleInputChange={handleInputChange}
+                handleFileChange={handleFileChange3}
+              />
 
-<ImageComponents
-  label='Sellado'
-  optionName='optionSellado'
-  imageKey='imageSellado'
-  descriptionKey='sellado'
-  option='No'
-  formData={formData}
-  handleButtonClick={handleButtonClick}
-  handleInputChange={handleInputChange}
-  handleFileChange={handleFileChange3}
-/>
-
-</AccordionContent>
+            </AccordionContent>
           </AccordionItem>
         </Accordion>
-
-   
 
         <Accordion type='single' collapsible style={{ padding: '8px 0' }}>
           <AccordionItem value='item-6'>
@@ -863,11 +854,11 @@ const ActaDeLlegada = (): JSX.Element => {
                     <SelectValue placeholder='Selecciona una fruta' />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value='4'>Manzanas (4°C)</SelectItem>
-                    <SelectItem value='7'>Plátanos (7°C)</SelectItem>
-                    <SelectItem value='1'>Uvas (1°C)</SelectItem>
-                    <SelectItem value='0'>Fresas (0°C)</SelectItem>
-                    <SelectItem value='-1'>Mango (-1°C)</SelectItem>
+                    {fruitOptions.map((option) => (
+                      <SelectItem key={option.label} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -875,7 +866,7 @@ const ActaDeLlegada = (): JSX.Element => {
           </AccordionItem>
         </Accordion>
 
-        <h2>Resultados de la Investigación</h2>
+        <h2>Resultados de la Investigación por Incumplimiento</h2>
         <Input
           type='text'
           name='resultadosInv'
@@ -1008,7 +999,7 @@ const ActaDeLlegada = (): JSX.Element => {
         >
           Guardar datos en la Bd
         </Button>
-        
+
         <Button
           onClick={() => {
             void handleUpdate()
@@ -1038,7 +1029,7 @@ const ActaDeLlegada = (): JSX.Element => {
                   >
                     <Button variant='default'>Descargar PDF</Button>
                   </PDFDownloadLink>
-                )
+                  )
                 : (
                   <Dialog>
                     <DialogTrigger asChild>
@@ -1069,10 +1060,10 @@ const ActaDeLlegada = (): JSX.Element => {
                       </div>
                     </DialogContent>
                   </Dialog>
-                )
+                  )
             })()}
           </div>
-        )
+          )
         : (
           <Dialog>
             <DialogTrigger asChild>
@@ -1102,7 +1093,7 @@ const ActaDeLlegada = (): JSX.Element => {
               </div>
             </DialogContent>
           </Dialog>
-        )}
+          )}
     </Layout>
   )
 }

@@ -2,7 +2,6 @@ import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogClose } from '@/components/ui/dialog'
-import { Description } from '@radix-ui/react-dialog'
 
 interface ModuleProps {
   label: string
@@ -66,14 +65,14 @@ const imageComponents: React.FC<ModuleProps> = ({
           No
         </Button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <label style={{ fontWeight: 'bold' }}>{labelText}</label>
+        <div style={{ flex: 1, alignItems: 'center', gap: '10px' }}>
+          <label style={{ width: '70%', fontWeight: 'bold' }}>{labelText}</label>
           <Input
             type='text'
             name={descriptionKey}
             value={formData[descriptionKey]}
             onChange={handleInputChange}
-            style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', width: '200px' }}
+            style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', flex: 1 }}
           />
         </div>
 

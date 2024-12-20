@@ -432,7 +432,7 @@ const DownloadPDF: React.FC<DownloadPDFProps> = ({ formData, firmaBase64Inspecto
           <View style={[{ width: '30%' }]}>
             <Text style={styles.cellLabel}>Ideal</Text>
             <View style={[styles.tableRow, { height: 50 }]}>
-              <Text style={styles.cellValue}> {formData.tempIdeal}°C </Text>
+              <Text style={styles.cellValue}> {formData.tempIdeal} </Text>
             </View>
           </View>
         </View>
@@ -552,7 +552,7 @@ const DownloadPDF: React.FC<DownloadPDFProps> = ({ formData, firmaBase64Inspecto
           <>
             <View style={{ borderWidth: 1, borderColor: '#000' }}>
               <Text style={{ fontSize: '15px' }}>  Evidencia No cumple libre de Fauna nociva  </Text>
-              <Text style={{ fontSize: '10px', paddingTop: 10 }}> {formData.limpio ?? ''} </Text>
+              <Text style={{ fontSize: '10px', paddingTop: 10 }}> {formData.fauna ?? ''} </Text>
               <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'flex-start' }}>
                 {formData.imageLibreFauna?.map((imageUrl: string, index: number) => (
                   <div key={index} style={{ padding: '4px', borderRadius: '10px', textAlign: 'center' }}>

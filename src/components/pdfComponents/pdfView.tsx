@@ -589,7 +589,6 @@ const ActaPDF: React.FC<ActaPDFProps> = ({
         formData.optionSellado === 'No' ||
         formData.optionLimpio === 'No' ||
         formData.optiontarimasDanadas === 'Si' ||
-        formData.optioncajasIdentificadas === 'Si' ||
         formData.optiondanadasManiobra === 'Si') && (
           <Page size='A4' style={styles.page}>
             <View>
@@ -1022,46 +1021,6 @@ const ActaPDF: React.FC<ActaPDFProps> = ({
                       }}
                     >
                       {formData.imagestarimasDanadas?.map(
-                        (imageUrl: string, index: number) => (
-                          <div key={index} style={{ margin: '10px' }}>
-                            <Image
-                              src={imageUrl}
-                              style={{
-                                width: '150px',
-                                height: '150px',
-                                borderRadius: '5px',
-                                marginBottom: '10px'
-                              }}
-                            />
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </View>
-                </>
-              )}
-              {formData.optioncajasIdentificadas === 'Si' && (
-                <>
-                  <View style={{ borderWidth: 1, borderColor: '#000' }}>
-                    <Text style={{ fontSize: '15px' }}>
-                      {' '}
-                      Evidencia Cajas Identificadas{' '}
-                    </Text>
-
-                    <Text style={{ fontSize: '10px', paddingTop: 10 }}>
-                      {' '}
-                      {formData.cajasIdentificadas ?? ''}{' '}
-                    </Text>
-
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start'
-                      }}
-                    >
-                      {formData.imagescajasIdentificadas?.map(
                         (imageUrl: string, index: number) => (
                           <div key={index} style={{ margin: '10px' }}>
                             <Image

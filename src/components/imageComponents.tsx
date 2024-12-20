@@ -43,11 +43,23 @@ const imageComponents: React.FC<ModuleProps> = ({
       labelText = 'Pon una descripción'
   }
   return (
-    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px', gap: '10px' }}>
-      <label style={{ flex: '0 0 50px', fontWeight: 'bold' }}>{label}: </label>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <Button name={optionName} value='Si' onClick={handleButtonClick}>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        marginBottom: '20px',
+        gap: '10px',
+        width: '100%'
+      }}
+    >
+      <label style={{ flex: 0.25, fontWeight: 'bold' }}>{label}: </label>
+      <div style={{ flex: 0.8, display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <Button
+          style={{ marginRight: '0' }}
+          name={optionName}
+          value='Si'
+          onClick={handleButtonClick}
+        >
           Sí
         </Button>
         <Button name={optionName} value='No' onClick={handleButtonClick}>

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Layout from '../components/Layout'
 import SignatureCanvas from 'react-signature-canvas'
-import { isMobile, isTablet } from 'react-device-detect'
+import { isAndroid, isMobile, isTablet, isChrome,isBrowser, } from 'react-device-detect'
 import {
   Accordion,
   AccordionContent,
@@ -111,7 +111,6 @@ const ActaDeLlegada = (): JSX.Element => {
 
     // Buscar detalles del acta seleccionada
     const selectedActa = actasList.find((acta) => acta.oc === oc)
-    console.log('lo que tiene acta es', selectedActa)
 
     if (selectedActa != null) {
       // Actualizar formData con los datos del acta seleccionada
@@ -169,7 +168,7 @@ const ActaDeLlegada = (): JSX.Element => {
         optionSeguridad: selectedActa.sec_obs ?? '',
         optionSellado: selectedActa.seal_obs ?? '',
         tarimasDanadas: selectedActa.pallet_dmg ?? '',
-        cajasIdentificadas: selectedActa.box_num ?? '',
+
         danadasManiobra: selectedActa.dmg_num ?? ''
       }))
     }
@@ -684,7 +683,7 @@ const ActaDeLlegada = (): JSX.Element => {
             </AccordionTrigger>
             <AccordionContent>
               <ImageComponents
-                label='Hay tarimas dañadas?:'
+                label='Hay tarimas dañadas?'
                 optionName='optiontarimasDanadas'
                 imageKey='imagestarimasDanadas'
                 descriptionKey='tarimasDanadas'
@@ -695,17 +694,6 @@ const ActaDeLlegada = (): JSX.Element => {
                 handleFileChange={handleFileChange3}
               />
 
-              <ImageComponents
-                label='Cajas Identificadas'
-                optionName='optioncajasIdentificadas'
-                imageKey='imagescajasIdentificadas'
-                descriptionKey='cajasIdentificadas'
-                option='Si'
-                formData={formData}
-                handleButtonClick={handleButtonClick}
-                handleInputChange={handleInputChange}
-                handleFileChange={handleFileChange3}
-              />
               <ImageComponents
                 label='Cajas Dañadas por Maniobra'
                 optionName='optiondanadasManiobra'
@@ -1014,6 +1002,7 @@ const ActaDeLlegada = (): JSX.Element => {
         >
           Guardar datos en la Bd
         </Button>
+        
         <Button
           onClick={() => {
             void handleUpdate()
@@ -1023,7 +1012,7 @@ const ActaDeLlegada = (): JSX.Element => {
           Actualizar en la base de datos
         </Button>
       </div>
-      {isMobile || isTablet
+      {isMobile || isAndroid || isTablet
         ? (
           <div style={{ padding: '10px', display: 'flex', justifyContent: 'center' }}>
             {(() => {

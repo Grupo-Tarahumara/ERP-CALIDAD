@@ -4,54 +4,91 @@ import { getIncompleteFields } from '@/components/validationEmptyFiles'
 
 export const query = async () => {
   try {
-    const { data, error } = await supabase.from('ActaDescarga').select('*')
-    if (error != null) {
-      console.log('hubo un error', error)
+    // Realizamos la solicitud GET a la API local
+    const response = await fetch('http://localhost:3000/api/data')
+
+    // Verificamos si la respuesta fue exitosa (status 200)
+    if (!response.ok) {
+      throw new Error('Error al obtener los datos')
     }
+
+    // Convertimos la respuesta a JSON
+    const data = await response.json()
+
+    // Verificamos si tenemos datos en la respuesta
     if ((data != null) && data.length > 0) {
-      console.log(data)
+      console.log(data) // Mostramos los datos obtenidos
     } else {
-      console.log(error)
+      console.log('No hay datos disponibles')
     }
   } catch (e) {
-    console.log('el error es:', e)
+    console.log('El error es:', e) // Capturamos y mostramos cualquier error que ocurra
   }
 }
 
 export const verificationOC = async (oc: string): Promise<boolean> => {
-  const { data, error } = await supabase.from('ActaDescarga').select('*').eq('oc', oc)
+  try {
+    const response = await fetch(`http://localhost:3000/api/verificationOC?oc=${oc}`)
 
-  if (error != null) {
-    console.error('Error al verificar la orden de compra:', error)
-    return false
-  }
+    if (!response.ok) {
+      throw new Error(`Error en la solicitud: ${response.statusText}`)
+    }
 
-  if (data?.length > 0 && data != null) {
+    const data = await response.json() // Analiza el cuerpo de la respuesta como JSON
+
+    if (data.length > 0) { // Si hay elementos, la OC ya existe
+      Swal.fire({
+        icon: 'warning',
+        title: 'Elemento existente',
+        text: 'La orden de compra ya fue registrada con este ID.',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#9A3424',
+        iconColor: '#9A3424'
+      })
+      return false
+    }
+
+    return true // No existen elementos, la OC es válida
+  } catch (error) {
+    console.error('Error en verificationOC:', error)
     Swal.fire({
-      icon: 'warning',
-      title: 'Elemento existente',
-      text: 'La orden de compra ya fue registrada con este ID.',
+      icon: 'error',
+      title: 'Error',
+      text: 'Hubo un problema al verificar la orden de compra.',
       confirmButtonText: 'Aceptar',
       confirmButtonColor: '#9A3424',
       iconColor: '#9A3424'
     })
     return false
   }
-
-  return true
 }
 
 export const insert = async (formData: any): Promise<void> => {
   try {
+    // Validar campos incompletos y verificar OC
     const incompleteFiles = getIncompleteFields(formData)
-    console.log(incompleteFiles.length)
+    console.log(incompleteFiles)
+
+    if (incompleteFiles.length > 0) {
+      Swal.fire({
+        title: 'Campos incompletos',
+        text: `Por favor completa los siguientes campos: ${incompleteFiles.join(', ')}`,
+        icon: 'warning',
+        confirmButtonText: 'Entendido'
+      })
+      return
+    }
 
     const state = await verificationOC(formData.oc)
 
-    if (state && incompleteFiles.length <= 0) {
-      await supabase
-        .from('ActaDescarga')
-        .insert([{
+    if (state) {
+      // Realizar la solicitud POST a la API
+      const response = await fetch('http://localhost:3000/api/insertActa', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
           fecha: formData.fecha,
           start_verification: formData.inicioVerificacion,
           end_verification: formData.terminoVerificacion,
@@ -112,11 +149,31 @@ export const insert = async (formData: any): Promise<void> => {
           invest_res: formData.resultadosInv,
           insp_name: formData.nombreInspector,
           driver_sign: formData.nombreChofer
-        }])
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.statusText}`)
+      }
+
+      Swal.fire({
+        title: 'Éxito',
+        text: 'Datos insertados correctamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      })
+
+      console.log('Datos insertados correctamente')
     } else {
-      console.log(' is not true ')
+      console.log('Los datos no son válidos o están incompletos')
     }
   } catch (e) {
+    Swal.fire({
+      title: 'Error',
+      text: `El error es: ${e.message}`,
+      icon: 'error',
+      confirmButtonText: 'Entendido'
+    })
     console.log('El error es:', e)
   }
 }
@@ -199,64 +256,18 @@ export const update = async (formData: any) => {
 }
 
 export const fetchActas = async () => {
-  const { data, error } = await supabase
-    .from('ActaDescarga')
-    .select(`
-      fecha,
-      start_verification,
-      end_verification,
-      oc,
-      provider,
-      origin,
-      bill,
-      specie,
-      varieties,
-      cold_disc,
-      boxes_received,
-      carrier_line,
-      num_cont,
-      truck_plt,
-      box_plt,
-      driver,
-      setpoint_temp,
-      setpoint_obs,
-      screen_temp,
-      screen_obs,
-      therm_org,
-      therm_dst,
-      clean_free,
-      close,
-      tarp_state,
-      pest_free,
-      load_state,
-      load_sec,
-      seal,
-      box_id,
-      invest_res,
-      tempa_door,
-      tempa_mid,
-      tempa_back,
-      tempm_door,
-      tempm_mid,
-      tempm_back,
-      tempb_door,
-      tempb_mid,
-      tempb_back,
-      temp_max,
-      temp_min,
-      temp_ideal,
-      insp_name,
-      pallet_dmg,
-      pallet_num,
-      box_num,
-      dmg_num,
-      specie
-    `)
+  try {
+    const response = await fetch('http://localhost:3000/api/fetchActas')
 
-  if (error != null) {
+    if (!response.ok) {
+      console.error('Error fetching actas:', response.status, response.statusText)
+      return null
+    }
+
+    const data = await response.json()
+    return data
+  } catch (error) {
     console.error('Error fetching actas:', error)
     return null
   }
-
-  return data
 }

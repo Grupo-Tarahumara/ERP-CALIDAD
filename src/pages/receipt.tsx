@@ -215,7 +215,6 @@ const ActaDeLlegada = (): JSX.Element => {
 
     void getActasData()
 
-    // Extraer las temperaturas de formData
     const allTemperatures = [
       formData.tempAPuerta,
       formData.tempAMedio,

@@ -168,9 +168,9 @@ export const insert = async (formData: any): Promise<void> => {
       console.log('Los datos no son válidos o están incompletos')
     }
   } catch (e) {
-    Swal.fire({
+    await Swal.fire({
       title: 'Error',
-      text: `El error es: ${e.message}`,
+      text: `El error es: ${String((e as Error).message)}`,
       icon: 'error',
       confirmButtonText: 'Entendido'
     })

@@ -54,14 +54,29 @@ const imageComponents: React.FC<ModuleProps> = ({
       <label style={{ flex: 0.25, fontWeight: 'bold' }}>{label}: </label>
       <div style={{ flex: 0.8, display: 'flex', alignItems: 'center', gap: '10px' }}>
         <Button
-          style={{ marginRight: '0' }}
+          style={{
+            marginRight: '0',
+            backgroundColor: formData[optionName] === 'Si'
+              ? 'green'
+              : formData[optionName] === null ? 'default' : 'lightgreen'
+          }}
           name={optionName}
           value='Si'
           onClick={handleButtonClick}
         >
           Sí
         </Button>
-        <Button name={optionName} value='No' onClick={handleButtonClick}>
+        <Button
+          style={{
+            marginRight: '0',
+            backgroundColor: formData[optionName] === 'No'
+              ? 'maroon'
+              : formData[optionName] === null ? 'default' : 'lightcoral'
+          }}
+          name={optionName}
+          value='No'
+          onClick={handleButtonClick}
+        >
           No
         </Button>
 

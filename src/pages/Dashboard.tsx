@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react'
-import Layout from '@/components/Layout'
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { IconFileCertificate } from '@tabler/icons-react'
@@ -40,9 +40,9 @@ const Content = (): ReactNode => {
 
 const Dashboard = (): ReactNode => {
   return (
-    <Layout>
-      <Content />
-    </Layout>
+
+    <Content />
+
   )
 }
 

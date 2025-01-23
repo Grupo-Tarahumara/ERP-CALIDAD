@@ -10,5 +10,10 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src')
     }
+  },
+  server: {
+    allowedHosts: [
+      'acta-erp.192.168.29.40.sslip.io' 
+    ]
   }
 })

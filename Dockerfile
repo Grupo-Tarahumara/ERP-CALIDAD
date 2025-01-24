@@ -18,5 +18,5 @@ COPY . .
 EXPOSE $PORT
 
 # Iniciar el servidor con pnpm
-CMD ["pnpm", "dev", "--host"]
+CMD ["pnpm", "dev"]
 

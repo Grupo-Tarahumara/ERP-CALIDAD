@@ -13,7 +13,7 @@ export default defineConfig({
   },
   server: {
     allowedHosts: [
-      'acta-erp.192.168.29.40.sslip.io' 
+      'gg4k00cg08k44c8kkowcowg4.192.168.29.40.sslip.io' 
     ]
   }
 })

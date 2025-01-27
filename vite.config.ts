@@ -13,7 +13,7 @@ export default defineConfig({
   },
   server: {
     allowedHosts: [
-      'gg4k00cg08k44c8kkowcowg4.192.168.29.40.sslip.io' 
+      'actaprueba.192.168.29.40.sslip.io' 
     ]
   }
 })
